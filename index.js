@@ -563,6 +563,14 @@ bot.on('callback_query', async (query) => {
             await bot.sendPhoto(telegramId, qrCodeBuffer, { caption: `QR-код для подключения по вашей подписке./n/n
             <b>Или скопируйте строку подключения для импорта 👇</b>/n
             <pre><code>${offerInfo.connString}</code></pre>/n/n
+
+            ${offerInfo.defConnString ? `
+                <b>РЕЗЕРВНАЯ ПОДПИСКА ТОЛЬКО для ТЕЛЕГРАМ 🆘</b>/n/n
+                Обновляется каждый месяц автоматически. Поможет вам оформить новую заявку, когда истечет основная. НЕ ТЕРЯЙТЕ и добавьте ее в приложение на ряду с основной подпиской,
+                НЕ ИСПОЛЬЗУЙТЕ ЕЕ КАК ОСНОВНУЮ, ее лимит 350 МБ.👇</b>/n
+                <pre><code>${state.offerData.connection}</code></pre>/n/n
+            `: ""}
+
             🌐 Статус: ${offerInfo.isExpired ? 'Подписка истекла ❌' : 'Подписка действует ✔️'}/n/n
             💻 Вы можете подключить любое количество устройств/n/n
             ℹ️ Название подписки: ${offerInfo.subName}/n/n
@@ -823,6 +831,14 @@ async function createNewoffer(state, onlyConnection){
             await bot.sendPhoto(telegramId, qrCodeBuffer, { caption: `QR-код для подключения по вашей подписке./n/n
                 <b>Или скопируйте строку подключения для импорта 👇</b>/n
                 <pre><code>${state.offerData.connection}</code></pre>/n/n
+
+                ${offerInfo.defConnString ? `
+                    <b>РЕЗЕРВНАЯ ПОДПИСКА ТОЛЬКО для ТЕЛЕГРАМ 🆘</b>/n/n
+                    Обновляется каждый месяц автоматически. Поможет вам оформить новую заявку, когда истечет основная. НЕ ТЕРЯЙТЕ и добавьте ее в приложение на ряду с основной подпиской,
+                    НЕ ИСПОЛЬЗУЙТЕ ЕЕ КАК ОСНОВНУЮ, ее лимит 350 МБ.👇</b>/n
+                    <pre><code>${state.offerData.connection}</code></pre>/n/n
+                `: ""}
+                
                 🌐 Статус: ${offerInfo.isExpired ? 'Подписка истекла ❌' : 'Подписка действует ✔️'}/n/n
                 💻 Вы можете подключить любое количество устройств/n/n
                 ℹ️ Название подписки: ${offerInfo.subName}/n/n
