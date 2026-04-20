@@ -571,7 +571,7 @@ bot.on('callback_query', async (query) => {
                     <pre><code>${offerInfo.defConnString}</code></pre>/n/n
                 `: ""}
 
-            `.format()});
+            `.format(), parse_mode: 'HTML'});
 
             //отправка сообщения с данными
             await bot.sendMessage(telegramId, `
@@ -841,7 +841,7 @@ async function createNewoffer(state, onlyConnection){
                     <pre><code>${offerInfo.defConnString}</code></pre>/n/n
                 `: ""}
 
-            `.format()});
+            `.format(), parse_mode: 'HTML'});
 
             //отправка сообщения с данными
             await bot.sendMessage(telegramId, `
