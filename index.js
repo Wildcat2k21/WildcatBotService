@@ -561,16 +561,20 @@ bot.on('callback_query', async (query) => {
 
             //отправка сообщения с данными
             await bot.sendPhoto(telegramId, qrCodeBuffer, { caption: `QR-код для подключения по вашей подписке./n/n
-            <b>Или скопируйте строку подключения для импорта 👇</b>/n
-            <pre><code>${offerInfo.connString}</code></pre>/n/n
+                <b>Или скопируйте строку подключения для импорта 👇</b>/n
+                <pre><code>${offerInfo.connString}</code></pre>/n/n
 
-            ${offerInfo.defConnString ? `
-                <b>РЕЗЕРВНАЯ ПОДПИСКА ТОЛЬКО для ТЕЛЕГРАМ 🆘</b>/n/n
-                Обновляется каждый месяц автоматически. Поможет вам оформить новую заявку, когда истечет основная. НЕ ТЕРЯЙТЕ и добавьте ее в приложение на ряду с основной подпиской,
-                НЕ ИСПОЛЬЗУЙТЕ ЕЕ КАК ОСНОВНУЮ, ее лимит 350 МБ.👇/n
-                <pre><code>${offerInfo.defConnString}</code></pre>/n/n
-            `: ""}
+                ${offerInfo.defConnString ? `
+                    <b>РЕЗЕРВНАЯ ПОДПИСКА ТОЛЬКО для ТЕЛЕГРАМ 🆘</b>/n/n
+                    Обновляется каждый месяц автоматически. Поможет вам оформить новую заявку, когда истечет основная. НЕ ТЕРЯЙТЕ и добавьте ее в приложение на ряду с основной подпиской,
+                    НЕ ИСПОЛЬЗУЙТЕ ЕЕ КАК ОСНОВНУЮ, ее лимит 350 МБ.👇/n
+                    <pre><code>${offerInfo.defConnString}</code></pre>/n/n
+                `: ""}
 
+            `.format(), ...state.options});
+
+            //отправка сообщения с данными
+            await bot.sendMessage(telegramId, `
             🌐 Статус: ${offerInfo.isExpired ? 'Подписка истекла ❌' : 'Подписка действует ✔️'}/n/n
             💻 Вы можете подключить любое количество устройств/n/n
             ℹ️ Название подписки: ${offerInfo.subName}/n/n
@@ -578,8 +582,7 @@ bot.on('callback_query', async (query) => {
             ${(offerInfo.limitDiffrence ? '➗ Трафик перерасчитан с учетом обновления QR-кода/n/n' : '')}
             ℹ️ Использовано: ${FormatBytes(offerInfo.usedTraffic)}/n/n
             📅 Дата окончания: ${new Time(offerInfo.subDateLimit).toFriendlyString()}/n/n
-            ℹ️ Создан: ${new Time(offerInfo.createdDate).toFriendlyString()}`.format(),
-            ...state.options});
+            ℹ️ Создан: ${new Time(offerInfo.createdDate).toFriendlyString()}`.format(), state.options);
 
             // /n/n
             // ${
@@ -592,7 +595,6 @@ bot.on('callback_query', async (query) => {
             // }
             // За каждого приглашенного друга, вы получаете скидку <b>${apiServerConfig.invite_discount}%</b> на следующую оплату, друг — <b>${apiServerConfig.for_invited_discount}%</b>./n/n
             // За двух приглашенных друзей вы получаете <b><u>бесплатный месяц на любой тариф</u></b> 🎁
-
 
             return
         }
@@ -838,16 +840,19 @@ async function createNewoffer(state, onlyConnection){
                     НЕ ИСПОЛЬЗУЙТЕ ЕЕ КАК ОСНОВНУЮ, ее лимит 350 МБ.👇/n
                     <pre><code>${offerInfo.defConnString}</code></pre>/n/n
                 `: ""}
-                
-                🌐 Статус: ${offerInfo.isExpired ? 'Подписка истекла ❌' : 'Подписка действует ✔️'}/n/n
-                💻 Вы можете подключить любое количество устройств/n/n
-                ℹ️ Название подписки: ${offerInfo.subName}/n/n
-                📶 Трафик: ${!offerInfo.dataLimit  ? 'ထ' : FormatBytes(offerInfo.dataLimit / 1024 ** 3)} ГБ/n/n
-                ${(offerInfo.limitDiffrence ? '➗ Трафик перерасчитан с учетом обновления QR-кода/n/n' : '')}
-                ℹ️ Использовано: ${FormatBytes(offerInfo.usedTraffic)}/n/n
-                📅 Дата окончания: ${new Time(offerInfo.subDateLimit).toFriendlyString()}/n/n
-                ℹ️ Создан: ${new Time(offerInfo.createdDate).toFriendlyString()}/n/n
+
             `.format(), ...state.options});
+
+            //отправка сообщения с данными
+            await bot.sendMessage(telegramId, `
+            🌐 Статус: ${offerInfo.isExpired ? 'Подписка истекла ❌' : 'Подписка действует ✔️'}/n/n
+            💻 Вы можете подключить любое количество устройств/n/n
+            ℹ️ Название подписки: ${offerInfo.subName}/n/n
+            📶 Трафик: ${!offerInfo.dataLimit  ? 'ထ' : FormatBytes(offerInfo.dataLimit / 1024 ** 3)} ГБ/n/n
+            ${(offerInfo.limitDiffrence ? '➗ Трафик перерасчитан с учетом обновления QR-кода/n/n' : '')}
+            ℹ️ Использовано: ${FormatBytes(offerInfo.usedTraffic)}/n/n
+            📅 Дата окончания: ${new Time(offerInfo.subDateLimit).toFriendlyString()}/n/n
+            ℹ️ Создан: ${new Time(offerInfo.createdDate).toFriendlyString()}`.format(), state.options);
 
             // <b>🔥 При приобритении платной подписки вам доступна реферальная ссылка</b>/n/n
             // За каждого приглашенного друга этой ссылке, вы получаете скидку <b>${apiServerConfig.invite_discount}%</b> на следующую оплату, друг — <b>${apiServerConfig.for_invited_discount}%</b>/n/n
